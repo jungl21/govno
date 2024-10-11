@@ -10,7 +10,7 @@ public class LoginGenerator {
             "м", "н","о", "п", "р", "с","т", "у", "ф", "х","ц", "ч", "ш", "щ", "ъ","ы", "ь", "э","ю", "я"};
 
     public static String generatelogin(Stuff stuff) {
-      var login = (stuff.getSurname() + "." + stuff.getName().substring(0,1) +
+      var login = (stuff.getSurname() + "." + stuff.getName().substring(0,1) + "." +
         stuff.getPatronymic().substring(0,1)).toLowerCase();
 
       var correctLogin = new StringBuilder();

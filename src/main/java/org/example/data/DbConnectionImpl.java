@@ -1,8 +1,6 @@
 package org.example.data;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DbConnectionImpl implements DbConnection {
     @Override
@@ -32,7 +30,8 @@ public class DbConnectionImpl implements DbConnection {
     @Override
     public boolean insertStuff(Stuff stuff) {
         try {
-            var request = "INSERT INTO public.name_stuff(id, name, surname, patronymic, login, password, job_title, salary) " +
+            var request = "INSERT INTO public.name_stuff(id, name, surname," +
+                    " patronymic, login, password, job_title, salary) " +
                     "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
             var connection = connect();
@@ -45,7 +44,7 @@ public class DbConnectionImpl implements DbConnection {
             prepareStatement.setString(3, stuff.getSurname());
             prepareStatement.setString(4, stuff.getPatronymic());
             prepareStatement.setString(5, stuff.getLogin());
-            prepareStatement.setString(6, stuff.getPassword());
+            prepareStatement.setString(6, Encryption.encrypt(stuff.getPassword()));
             prepareStatement.setString(7, stuff.getJob_title());
             prepareStatement.setDouble(8, stuff.getSalary());
 

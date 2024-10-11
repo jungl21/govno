@@ -1,26 +1,39 @@
 package org.example.data;
 
-import java.util.Scanner;
-
 public class Stuff {
     private String id;
     private String name;
     private String surname;
     private String patronymic;
-    private String job_title;
+    private String job;
     private String login;
     private String password;
     private double salary;
 
-    public Stuff(String surname, String name, String patroymic, String password){
-        //this.id =
+    public Stuff(String surname, String name, String patronymic, String password, String jobTitle){
         this.name = name;
         this.surname = surname;
-        this.patronymic = patroymic;
-        this.job_title = checkJob();
+        this.patronymic = patronymic;
         this.password = password;
         this.login = LoginGenerator.generatelogin(this);
-        this.salary = 0; //TODO() - генерация зарплаты
+        this.job = jobTitle;
+        this.salary = SalaryWorkers.generateSalary(job);
+
+    }
+
+    public Stuff(String name, String surname, String patronymic, String job_title, double salary, String id) {
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.job = job_title;
+        this.salary = salary;
+        this.id = id;
+    }
+
+    public Stuff(String name, String surname, String patronymic) {
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
     }
 
     public String getId() {
@@ -47,33 +60,17 @@ public class Stuff {
         return patronymic;
     }
 
-    public void setPatroymic(String patroymic) {
-        this.patronymic = patroymic;
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
     }
 
-    public static String checkJob() {
-        Scanner sc = new Scanner(System.in);
-        var job_title = sc.nextLine();
-
-        switch (job_title.toUpperCase()) {
-            case "ADMINISTRATOR", "MANAGER", "ENGINEER" -> {
-                return job_title;
-            }
-            default -> {
-                System.out.println("Incorrect job. Please, try again.");
-                checkJob();
-            }
-        }
-        return job_title;
-
-    }
 
     public String getJob_title() {
-        return job_title;
+        return job;
     }
 
     public void setJob(String job) {
-        this.job_title = job;
+        this.job = job;
     }
 
     public String getLogin() {
