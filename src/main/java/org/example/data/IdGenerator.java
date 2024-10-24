@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 public class IdGenerator {
 
+
     public static String generatedId(Stuff stuff) {
         var id = stuff.getJob_title().substring(0,1).toUpperCase() + "-";
 

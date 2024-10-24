@@ -11,7 +11,7 @@ public class LoginGenerator {
 
     public static String generatelogin(Stuff stuff) {
       var login = (stuff.getSurname() + "." + stuff.getName().substring(0,1) + "." +
-        stuff.getPatronymic().substring(0,1)).toLowerCase();
+        stuff.middle_name().substring(0,1)).toLowerCase();
 
       var correctLogin = new StringBuilder();
 

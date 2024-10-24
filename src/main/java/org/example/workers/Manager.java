@@ -45,7 +45,7 @@ public class Manager {
     private static void selectUsersData() {
         DbConnectionImpl dbConnection = new DbConnectionImpl();
         try {
-            String  request = "SELECT * FROM public.name_stuff";
+            String  request = "SELECT * FROM public.test_tb";
             Statement statement = dbConnection.connect().createStatement();
             ResultSet resultSet = statement.executeQuery(request);
 
@@ -67,7 +67,7 @@ public class Manager {
 
     private static void showSecond(Stuff stuff) {
         System.out.println("Your data in db: " + "Your name - " + stuff.getName() + ", your surname - " +
-                stuff.getSurname() + ", your patronymic - " + stuff.getPatronymic());
+                stuff.getSurname() + ", your patronymic - " + stuff.middle_name());
     }
 
     private static void showFirst(Stuff stuff) {

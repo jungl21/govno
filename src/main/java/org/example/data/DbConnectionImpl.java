@@ -6,7 +6,7 @@ public class DbConnectionImpl implements DbConnection {
     @Override
     public void select() {
         try {
-            String  request = "SELECT * FROM public.name_stuff";
+            String  request = "SELECT * FROM public.test_tb";
             Statement statement = connect().createStatement();
             ResultSet resultSet = statement.executeQuery(request);
 
@@ -14,7 +14,7 @@ public class DbConnectionImpl implements DbConnection {
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 String surname = resultSet.getString("surname");
-                String patronymic = resultSet.getString("patronymic");
+                String middle_name = resultSet.getString("middle_name");
                 String job_title = resultSet.getString("job_title");
                 String login = resultSet.getString("login");
                 String password = resultSet.getString("password");
@@ -30,8 +30,8 @@ public class DbConnectionImpl implements DbConnection {
     @Override
     public boolean insertStuff(Stuff stuff) {
         try {
-            var request = "INSERT INTO public.name_stuff(id, name, surname," +
-                    " patronymic, login, password, job_title, salary) " +
+            var request = "INSERT INTO public.test_tb(id, name, surname," +
+                    " middle_name, login, password, job_title, salary) " +
                     "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
             var connection = connect();
@@ -42,7 +42,7 @@ public class DbConnectionImpl implements DbConnection {
             prepareStatement.setString(1, IdGenerator.generatedId(stuff));
             prepareStatement.setString(2, stuff.getName());
             prepareStatement.setString(3, stuff.getSurname());
-            prepareStatement.setString(4, stuff.getPatronymic());
+            prepareStatement.setString(4, stuff.middle_name());
             prepareStatement.setString(5, stuff.getLogin());
             prepareStatement.setString(6, Encryption.encrypt(stuff.getPassword()));
             prepareStatement.setString(7, stuff.getJob_title());
@@ -72,7 +72,7 @@ public class DbConnectionImpl implements DbConnection {
     public int countObjects() {
         var size = 0;
         try {
-            String request = "SELECT * FROM public.name_stuff";
+            String request = "SELECT * FROM public.test_tb";
             var statement = connect().createStatement();
             ResultSet resultSet = statement.executeQuery(request);
 

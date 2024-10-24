@@ -1,7 +1,7 @@
 package org.example.app;
 
 
-import org.example.data.CheckJob;
+//import org.example.data.CheckJob;
 import org.example.data.DbConnectionImpl;
 import org.example.data.Stuff;
 import org.example.workers.Administrator;
@@ -19,14 +19,14 @@ import static org.example.data.Encryption.encrypt;
 
 public class AppMenu {
     public static void start() {
-        System.out.println("System started");
+        System.out.println("Система работает");
         showMenu();
     }
 
     public static void showMenu() {
-        System.out.println("1 - Log in");
-        System.out.println("2 - Sign up");
-        System.out.println("3 - Exit");
+        System.out.println("1 - Войти: ");
+        System.out.println("2 - Регистрация: ");
+        System.out.println("3 - Выйти: ");
 
         checkUserChoice(getUserChoice());
     }
@@ -37,7 +37,7 @@ public class AppMenu {
             case 2 -> showLoginMenu();
             case 3 -> System.exit(0);
             default -> {
-                System.out.println("An incorrect selection was entered." + " Please, try again later.");
+                System.out.println("Был введен неправильный выбор." + " Пожалуйста, попробуйте ещё раз.");
                 showMenu();
             }
         }
@@ -46,33 +46,33 @@ public class AppMenu {
     private static void showLoginMenu() {
         var name = "";
         var surname = "";
-        var patronymic = "";
+        var middle_name = "";
         var password = "";
+        var job = "";
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter your Surname:");
+        System.out.print("Введите вашу фамилию:");
         surname = sc.nextLine();
 
-        System.out.print("Enter your Name: ");
+        System.out.print("Введите ваше имя: ");
         name = sc.nextLine();
 
-        System.out.print("Enter your Patronymic:");
-        patronymic = sc.nextLine();
+        System.out.print("Введите ваше отчество:");
+        middle_name = sc.nextLine();
 
-        System.out.print("Enter Password: ");
+        System.out.print("Введите пароль: ");
         password = sc.nextLine();
 
 
-        System.out.print("Enter Job title: ");
-
-        var job = CheckJob.checkJob(sc.nextLine());
+        System.out.print("Введите вашу должность: ");
+        job = sc.nextLine();
         try {
             DbConnectionImpl impl = new DbConnectionImpl();
-            impl.insertStuff(new Stuff(surname, name, patronymic, password, job));
+            impl.insertStuff(new Stuff(surname, name, middle_name, password, job));
             impl.connect().close();
         } catch (SQLException e) {
-            System.out.println("Failure");
+            System.out.println("Ошибка");
         }
         showMenu();
     }
@@ -80,9 +80,9 @@ public class AppMenu {
     private static void showSignMenu() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter your login: ");
+        System.out.print("Введите ваш логин: ");
         String login = sc.nextLine();
-        System.out.print("Enter your password: ");
+        System.out.print("Введите ваш пароль: ");
         String password = sc.nextLine();
 
         checkData(login, password);
@@ -91,14 +91,14 @@ public class AppMenu {
     private static void checkData(String login, String password) {
         DbConnectionImpl dbConnection = new DbConnectionImpl();
         try (PreparedStatement stmt = dbConnection.connect().prepareStatement(
-                "SELECT * FROM name_stuff WHERE login = ? AND password = ?")) {
+                "SELECT * FROM test_tb WHERE login = ? AND password = ?")) {
             stmt.setString(1, login);
             stmt.setString(2, encrypt(password));
             ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
                 Stuff user= new Stuff(rs.getString("name"),
                         rs.getString("surname"),
-                        rs.getString("patronymic"),
+                        rs.getString("middle_name"),
                         rs.getString("job_title"),
                         rs.getDouble("salary"),
                         rs.getString("id")
@@ -123,17 +123,17 @@ public class AppMenu {
         int currentHour = LocalTime.now().getHour();
         String greeting;
         if (currentHour >= 4 && currentHour < 12) {
-            greeting = "Good morning";
+            greeting = "Доброе утро";
         } else if (currentHour >= 12 && currentHour < 17) {
-            greeting = "Good day";
+            greeting = "Добрый день";
         } else if (currentHour >= 17 && currentHour < 22) {
-            greeting = "Good evening";
+            greeting = "Доброе вечер";
         } else {
-            greeting = "Good night";
+            greeting = "Доброй ночи";
         }
         System.out.println(greeting + ", " + user.getName() + ".");
         System.out.println(user.getId() + " " + user.getSurname() + " " + user.getName() + " "
-                + user.getPatronymic() + ", " + user.getJob_title());
+                + user.middle_name() + ", " + user.getJob_title());
 
     }
 
@@ -143,13 +143,15 @@ public class AppMenu {
             Scanner sc = new Scanner(System.in);
             choice = sc.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Incorrect menu entry type. Try again.");
+            System.out.println("Неправильный тип пункта меню. Попробуйте еще раз.");
             getUserChoice();
         }
         return choice;
     }
 
 
+    private static class CheckJob {
+    }
 }
 
 

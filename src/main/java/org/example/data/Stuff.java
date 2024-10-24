@@ -56,11 +56,11 @@ public class Stuff {
         this.surname = surname;
     }
 
-    public String getPatronymic() {
+    public String middle_name() {
         return patronymic;
     }
 
-    public void setPatronymic(String patronymic) {
+    public void setMiddle_name(String patronymic) {
         this.patronymic = patronymic;
     }
 
