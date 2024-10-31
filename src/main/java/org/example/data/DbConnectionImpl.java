@@ -11,7 +11,7 @@ public class DbConnectionImpl implements DbConnection {
             ResultSet resultSet = statement.executeQuery(request);
 
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
+                long id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String surname = resultSet.getString("surname");
                 String middle_name = resultSet.getString("middle_name");

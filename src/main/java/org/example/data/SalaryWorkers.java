@@ -26,7 +26,6 @@ public class SalaryWorkers {
     private static double generateSalaryForWorker(int min, int max) {
         Random random = new Random();
 
-        // Генерация случайного числа в указанном диапазоне
         return  random.nextInt(max - min + 1) + min;
 
     }

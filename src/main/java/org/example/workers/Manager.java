@@ -11,11 +11,11 @@ import java.util.Scanner;
 
 public class Manager {
     public static void showMenuManager(Stuff user) {
-        System.out.println("The following rights are available to you to work");
-        System.out.println("1 - You can see your salary");
-        System.out.println("2 - You can view your name, surname and patronymic in db.");
-        System.out.println("3 - You can view salary everyone stuff");
-        System.out.println("4 - Log out");
+        System.out.println("Вам доступны следующие права для работы");
+        System.out.println("1 - Вы можете видеть свою зарплату");
+        System.out.println("2 - Посмотреть свое имя, фамилию и отчество вы можете в БД.");
+        System.out.println("3 - Вы можете просмотреть информацию о зарплате всех");
+        System.out.println("4 - Выйти");
 
         getUserMenuChoice(user);
     }
@@ -28,7 +28,7 @@ public class Manager {
             case "3" -> showThird();
             case "4" -> showFourth();
             default -> {
-                System.out.println("Incorrect choice. PLease, try again.");
+                System.out.println("Неправильный выбор. Пожалуйста, попробуйте еще раз.");
                 showMenuManager(user);
             }
         }
@@ -53,7 +53,7 @@ public class Manager {
                 var id = resultSet.getString("id");
                 var name = resultSet.getString("name");
                 var surname = resultSet.getString("surname");
-                var patronymic = resultSet.getString("patronymic");
+                var middle_name = resultSet.getString("middle_name");
                 var job_title = resultSet.getString("job_title");
                 var salary = resultSet.getDouble("salary");
 
@@ -66,13 +66,12 @@ public class Manager {
 
 
     private static void showSecond(Stuff stuff) {
-        System.out.println("Your data in db: " + "Your name - " + stuff.getName() + ", your surname - " +
-                stuff.getSurname() + ", your patronymic - " + stuff.middle_name());
+        System.out.println("Ваши данные в БД:" + "Ваше имя " + stuff.getName() + ", твоя фамилия - " +
+                stuff.getSurname() + ", твое отчество - " + stuff.middle_name());
     }
 
     private static void showFirst(Stuff stuff) {
-        //TODO() - result of first menu
-        System.out.println("Your salary:  " + stuff.getSalary());
+        System.out.println("Ваша зарплата:" + stuff.getSalary());
     }
 
 
